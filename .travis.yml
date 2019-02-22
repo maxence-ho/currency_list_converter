@@ -1,0 +1,5 @@
+language: objective-c 
+osx_image: xcode9
+xcode_project: currency_converter.xcodeproj 
+xcode_scheme: currency_converter 
+xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X

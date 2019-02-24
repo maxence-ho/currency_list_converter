@@ -77,12 +77,10 @@
 		01CCD22422207E2E00D08C4E /* currency_converter */ = {
 			isa = PBXGroup;
 			children = (
-				01CCD22522207E2E00D08C4E /* AppDelegate.swift */,
-				01CCD22722207E2E00D08C4E /* ViewController.swift */,
 				01CCD22922207E2E00D08C4E /* Main.storyboard */,
-				01CCD22C22207E2F00D08C4E /* Assets.xcassets */,
-				01CCD22E22207E2F00D08C4E /* LaunchScreen.storyboard */,
-				01CCD23122207E2F00D08C4E /* Info.plist */,
+				01CCD2632223092200D08C4E /* Application */,
+				01CCD264222309DD00D08C4E /* Resources */,
+				01CCD22722207E2E00D08C4E /* ViewController.swift */,
 			);
 			path = currency_converter;
 			sourceTree = "<group>";
@@ -94,6 +92,24 @@
 				01CCD23C22207E2F00D08C4E /* Info.plist */,
 			);
 			path = currency_converterTests;
+			sourceTree = "<group>";
+		};
+		01CCD2632223092200D08C4E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				01CCD22522207E2E00D08C4E /* AppDelegate.swift */,
+				01CCD22E22207E2F00D08C4E /* LaunchScreen.storyboard */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		01CCD264222309DD00D08C4E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				01CCD22C22207E2F00D08C4E /* Assets.xcassets */,
+				01CCD23122207E2F00D08C4E /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,7 +377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = currency_converter/Info.plist;
+				INFOPLIST_FILE = currency_converter/resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -379,7 +395,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = currency_converter/Info.plist;
+				INFOPLIST_FILE = currency_converter/resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

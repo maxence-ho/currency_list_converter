@@ -12,6 +12,11 @@ import XCTest
 
 class CurrencyRatesTests: XCTestCase
 {
+    /**
+     * - When : creating `CurrencyRates` instance from given json test file
+     * - Expects : an instance of `CurrencyRates` has effectively been created
+     * - Expects : instance should contain the correct information (based on json)
+     */
     func test_serialization()
     {
         guard

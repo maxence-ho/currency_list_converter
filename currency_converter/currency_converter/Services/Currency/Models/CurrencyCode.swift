@@ -6,4 +6,7 @@
 //  Copyright © 2019 chiminhTT. All rights reserved.
 //
 
-import Foundation
+/** CurrencyCode - typealias to represent currency short name
+ *  ex: `USD` -> US Dollar
+ */
+typealias CurrencyCode = String

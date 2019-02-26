@@ -7,14 +7,31 @@
 //
 
 import UIKit
+import Promises
 
-class ViewController: UIViewController {
+class ViewController: UIViewController
+{
+    var currencyRate: CurrencyRates?
+    var poll: PollAsync<CurrencyRates>?
+    var counter = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let requestFactory = RequestFactory(
+            getRequest: { return CurrencyServiceProvider.getCurrencyRates(baseCurrency: "EUR") }
+        )
+        poll = PollAsync<CurrencyRates>(
+            requestFactory: requestFactory,
+            completion: { newCurrencyRate in
+                self.currencyRate = newCurrencyRate
+//                print(self.counter)
+                self.counter += 1
+                if self.counter == 10 { self.poll = nil }
+            },
+            interval: 1
+        )
+        
+        poll?.start()
     }
-
-
 }
 

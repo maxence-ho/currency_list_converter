@@ -62,7 +62,7 @@ class CurrencyServiceProvider
     
     /**
      * Mocked Currency service endpoint to get the currencies information
-     * - returns: currency list information as `CurrencyListInfo`
+     * - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
      */
     static func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
     {

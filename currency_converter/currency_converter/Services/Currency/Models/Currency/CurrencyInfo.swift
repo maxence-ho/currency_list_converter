@@ -13,6 +13,7 @@ struct CurrencyInfo: Decodable
     let symbol: String
 }
 
+/** Wrapper structure returned by mocked service. And containing CurrencInfo list */
 struct CurrencyListInfo: Decodable
 {
     struct Response: Decodable

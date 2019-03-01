@@ -59,4 +59,21 @@ class CurrencyServiceProvider
                 }
         }
     }
+    
+    /**
+     * Mocked Currency service endpoint to get the currencies information
+     * - returns: currency list information as `CurrencyListInfo`
+     */
+    static func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
+    {
+        if let path = Bundle.main.path(forResource: "currency_list", ofType: "json") {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let currencyInfoList = try JSONDecoder().decode(CurrencyListInfo.self, from: data)
+            let currencyTupleList = currencyInfoList.response.currencies.map({ currency in
+                (currency.code, currency)
+            })
+            return Dictionary(currencyTupleList, uniquingKeysWith: { first, _ in first })
+        }
+        throw CurrencyServiceError.mockedResourcedSearchFailed
+    }
 }

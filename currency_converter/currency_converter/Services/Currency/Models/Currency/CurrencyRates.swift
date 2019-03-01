@@ -11,5 +11,5 @@ struct CurrencyRates: Codable
 {
     var base: CurrencyCode
     var date: String
-    var rates: [CurrencyCode:Float]
+    var rates: [CurrencyCode:Double]
 }

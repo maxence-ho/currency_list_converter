@@ -12,7 +12,7 @@ import Promises
 let concurrentPollingQueue = DispatchQueue(label: "polling_queue", attributes: .concurrent)
 
 /** Defines the structure */
-class PollAsync<T: Codable>
+class PollAsyncTask<T: Codable>
 {
     /** Factory generating the request's promises */
     let requestFactory: RequestFactory<T>!
@@ -20,7 +20,7 @@ class PollAsync<T: Codable>
     let completion: ((T) -> Void)!
     /** Polling interval */
     let interval: TimeInterval!
-    /** Polling timer */
+    /** Polling timer (in seconds) that will run in concurrent queue */
     let timer = DispatchSource.makeTimerSource(queue: concurrentPollingQueue)
     
     init(requestFactory: RequestFactory<T>,
@@ -39,7 +39,7 @@ class PollAsync<T: Codable>
     }
 }
 
-extension PollAsync
+extension PollAsyncTask
 {
     /** Setup and starts the polling timer and its handler (based on the `completion` parameter) */
     func start()

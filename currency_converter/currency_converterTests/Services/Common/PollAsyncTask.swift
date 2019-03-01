@@ -13,7 +13,7 @@ import Promises
 
 class PollAsyncTests: XCTestCase
 {
-    var testPoll: PollAsync<Bool>?
+    var testPoll: PollAsyncTask<Bool>?
     
     /**
      * - When : calling `start` from PollAsync instance that is killed after 3 ticks
@@ -29,7 +29,7 @@ class PollAsyncTests: XCTestCase
         })
         
         let expectation = XCTestExpectation(description: "Get 3 ticks of polling")
-        testPoll = PollAsync(
+        testPoll = PollAsyncTask(
             requestFactory: testRequestFactory,
             completion: { response in
                 print(count)

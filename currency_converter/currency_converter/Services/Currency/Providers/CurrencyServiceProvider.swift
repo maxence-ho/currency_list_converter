@@ -9,18 +9,8 @@
 import Alamofire
 import Promises
 
-protocol CurrencyServiceProviderProtocol
-{
-    /**
-     * Currency service endpoint to get the currency rates for a given base currency
-     * - parameters baseCurrrency: base currency which rates are requested
-     * - returns: currency rates (relative to the base currency) as `CurrencyRate`
-     */
-    static func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
-}
-
 /** Class used as namespace to contain all the endpoints related to currency requests */
-class CurrencyServiceProvider: CurrencyServiceProviderProtocol
+class CurrencyServiceProvider
 {
     /**
      * Currency service endpoint to get the currency rates for a given base currency

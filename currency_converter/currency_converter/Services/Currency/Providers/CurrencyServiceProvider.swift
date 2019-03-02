@@ -14,9 +14,15 @@ protocol CurrencyServiceProviderProtocol
     /**
      * Currency service endpoint to get the currency rates for a given base currency
      * - parameters baseCurrrency: base currency which rates are requested
-     * - returns: currency rates (relative to the base currency) as `CurrencyRate`
+     * - returns: currency rates (relative to the base currency) as `CurrencyRates`
      */
-    static func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
+    func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
+    
+    /**
+     * Mocked Currency service endpoint to get the currencies information
+     * - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
+     */
+    func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
 }
 
 /** Class used as namespace to contain all the endpoints related to currency requests */
@@ -27,7 +33,7 @@ class CurrencyServiceProvider: CurrencyServiceProviderProtocol
      * - parameters baseCurrrency: base currency which rates are requested
      * - returns: currency rates (relative to the base currency) as `CurrencyRates`
      */
-    static func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
+    func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
     {
         guard let request = try? CurrencyRouter
             .getCurrencyRates(baseCurrencyCode: baseCurrency)
@@ -68,5 +74,22 @@ class CurrencyServiceProvider: CurrencyServiceProviderProtocol
                     }
                 }
         }
+    }
+    
+    /**
+     * Mocked Currency service endpoint to get the currencies information
+     * - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
+     */
+    func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
+    {
+        guard let path = Bundle.main.path(forResource: "getCurrencyInfoList", ofType: "json")
+        else { throw CurrencyServiceError.mockedResourcedSearchFailed }
+    
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        let currencyInfoList = try JSONDecoder().decode(CurrencyListInfo.self, from: data)
+        let currencyTupleList = currencyInfoList.response.currencies.map({ currency in
+            (currency.code, currency)
+        })
+        return Dictionary(currencyTupleList, uniquingKeysWith: { first, _ in first })
     }
 }

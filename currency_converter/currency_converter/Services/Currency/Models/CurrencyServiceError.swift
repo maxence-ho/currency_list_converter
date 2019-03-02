@@ -9,4 +9,5 @@
 enum CurrencyServiceError: Error
 {
     case generatingRequestURLError
+    case mockedResourcedSearchFailed
 }

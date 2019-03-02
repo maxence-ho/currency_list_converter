@@ -11,27 +11,34 @@ import Promises
 
 class ViewController: UIViewController
 {
-    var currencyRate: CurrencyRates?
-    var poll: PollAsync<CurrencyRates>?
+    @IBOutlet weak var flagImageView: UIImageView!
+    
+    var currencyManager: CurrencyManager?
     var counter = 0
+    var currencyRates: [AugmentedCurrencyRateBO] = []
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        let requestFactory = RequestFactory(
-            getRequest: { return CurrencyServiceProvider.getCurrencyRates(baseCurrency: "EUR") }
-        )
-        poll = PollAsync<CurrencyRates>(
-            requestFactory: requestFactory,
-            completion: { newCurrencyRate in
-                self.currencyRate = newCurrencyRate
-//                print(self.counter)
-                self.counter += 1
-                if self.counter == 10 { self.poll = nil }
-            },
-            interval: 1
-        )
-        
-        poll?.start()
+        self.currencyManager = CurrencyManager(baseCurrency: "EUR")
+        self.currencyManager?.delegate = self
+        self.currencyManager?.startPolling()
+    }
+    
+    @IBAction func changeBaseCurrency(_ sender: Any)
+    {
+        self.currencyManager?.baseCurrency = self.currencyManager?.baseCurrency == "EUR" ? "JPY" : "EUR"
     }
 }
 
+extension ViewController: CurrencyManagerListener
+{
+    func currencyRatesDidChange(newCurrencyRates: [AugmentedCurrencyRateBO])
+    {
+        self.currencyRates = newCurrencyRates
+        let usdRateInfo = newCurrencyRates.first(where: { currencyRateBO -> Bool in
+            return currencyRateBO.currencyInfo.currencyCode == "USD"
+        })
+        print("\(usdRateInfo!.currencyInfo.currencyCode): \(usdRateInfo!.conversionRate)\(usdRateInfo!.currencyInfo.symbol) -> 1 \(currencyManager!.baseCurrency)")
+    }
+}

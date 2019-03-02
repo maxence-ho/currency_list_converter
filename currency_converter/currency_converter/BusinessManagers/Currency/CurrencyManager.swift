@@ -18,6 +18,9 @@ protocol CurrencyManagerListener: class {
  */
 class CurrencyManager
 {
+    /** Used for unit tests */
+    private let currencyServiceProvider: CurrencyServiceProviderProtocol
+    
     /** List of currency information that is fetched from a mocked service - embedded json file */
     private let currencyInfoDict: Dictionary<CurrencyCode, CurrencyInfo>
     
@@ -35,14 +38,16 @@ class CurrencyManager
         didSet {
             self.pollTask = nil
             let requestFactory = RequestFactory(
-                getRequest: { return CurrencyServiceProvider.getCurrencyRates(baseCurrency: self.baseCurrency) }
+                getRequest: { [unowned self] in
+                    return self.currencyServiceProvider.getCurrencyRates(baseCurrency: self.baseCurrency)
+                }
             )
             self.configurePolling(withRequestFactory: requestFactory)
         }
     }
     
     /** Up to date currency rates based on the base currency */
-    private var currencyRates: [AugmentedCurrencyRateBO] = [] {
+    var currencyRates: [AugmentedCurrencyRateBO] = [] {
         /** Upon changing the currencyRates, we notify the delegate that this
          * value has changed and pass the new value
          */
@@ -54,10 +59,11 @@ class CurrencyManager
     /** Init - failable.
      * parameter baseCurrency: code of the base currency
      */
-    init?(baseCurrency: CurrencyCode)
+    init?(baseCurrency: CurrencyCode, currencyServiceProvider: CurrencyServiceProviderProtocol? = nil)
     {
+        self.currencyServiceProvider = currencyServiceProvider ?? CurrencyServiceProvider()
         guard
-            let fetchedCurrencyInfoDict = try? CurrencyServiceProvider.getCurrencyListInfo()
+            let fetchedCurrencyInfoDict = try? self.currencyServiceProvider.getCurrencyListInfo()
         else { return nil}
         
         self.baseCurrency = baseCurrency
@@ -72,7 +78,9 @@ extension CurrencyManager
     func startPolling()
     {
         let requestFactory = RequestFactory(
-            getRequest: { return CurrencyServiceProvider.getCurrencyRates(baseCurrency: self.baseCurrency) }
+            getRequest: { [unowned self] in
+                return self.currencyServiceProvider.getCurrencyRates(baseCurrency: self.baseCurrency)
+            }
         )
         configurePolling(withRequestFactory: requestFactory)
     }
@@ -83,7 +91,7 @@ extension CurrencyManager
     private func configurePolling(withRequestFactory requestFactory: RequestFactory<CurrencyRates>)
     {
         self.pollTask = PollAsyncTask(requestFactory: requestFactory,
-                                      completion: {
+                                      completion: { [unowned self] in
                                         self.currencyRates = $0.augmented(with: self.currencyInfoDict)
                                       },
                                       interval: 1)

@@ -9,7 +9,7 @@
 import UIKit
 
 /** Business Object - CurrencyInfo augmented by getting flag image for currency */
-struct AugmentedCurrencyInfoBO
+struct AugmentedCurrencyInfoBO: Equatable
 {
     /** String representing the currency code
      *  ex: USD

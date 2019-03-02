@@ -1,5 +1,5 @@
 //
-//  PollAsync.swift
+//  PollAsyncTask.swift
 //  currency_converterTests
 //
 //  Created by HO Maxence (i-BP) on 26/02/2019.
@@ -11,7 +11,7 @@ import Promises
 
 @testable import currency_converter
 
-class PollAsyncTests: XCTestCase
+class PollAsyncTaskTests: XCTestCase
 {
     var testPoll: PollAsyncTask<Bool>?
     

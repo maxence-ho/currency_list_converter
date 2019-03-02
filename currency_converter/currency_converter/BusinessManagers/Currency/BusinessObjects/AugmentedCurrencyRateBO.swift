@@ -7,7 +7,7 @@
 //
 
 /** Business Object - CurrencyInfo augmented by getting flag image for currency */
-struct AugmentedCurrencyRateBO
+struct AugmentedCurrencyRateBO: Equatable
 {
     /** Conversion rate - based on a based currency */
     let conversionRate: Double

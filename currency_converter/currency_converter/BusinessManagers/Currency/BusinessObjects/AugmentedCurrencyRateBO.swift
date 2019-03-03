@@ -17,10 +17,13 @@ struct AugmentedCurrencyRateBO: Equatable
 
 extension AugmentedCurrencyRateBO
 {
-    /** Init - failable
-     * parameter currencyCode: code of the currency
-     * parameter conversionRate: conversion rate for the currency associated to `currencyCode`
-     * parameter currencyInfoList: dictionary containing the currency information for each currency code
+    /**
+     Init - failable
+     
+     - parameters:
+        - currencyCode: code of the currency
+        - conversionRate: conversion rate for the currency associated to `currencyCode`
+        - currencyInfoList: dictionary containing the currency information for each currency code
      */
     init?(currencyCode: CurrencyCode,
           conversionRate: Double,

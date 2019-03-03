@@ -29,9 +29,12 @@ struct AugmentedCurrencyInfoBO: Equatable
 
 extension AugmentedCurrencyInfoBO
 {
-    /** Init - failable
-     * parameter currencyCode: code of the currency we want the info
-     * parameter currencyInfoDict: dictionary containing the currency information for each currency code
+    /**
+     Init - failable
+     
+     - parameters:
+        - currencyCode: code of the currency we want the info
+        - currencyInfoDict: dictionary containing the currency information for each currency code
      */
     init?(currencyCode: CurrencyCode,
           currencyInfoDict: Dictionary<CurrencyCode, CurrencyInfo>)

@@ -33,8 +33,9 @@ enum CurrencyRouter: URLRequestConvertible
     }
     
     /**
-     * Gives the request URL (with the correct parameters) for a given route.
-     * - returns: URLRequest for the given route
+     Gives the request URL (with the correct parameters) for a given route.
+     
+     - returns: URLRequest for the given route
      */
     func asURLRequest() throws -> URLRequest
     {

@@ -56,8 +56,12 @@ class CurrencyManager
         }
     }
 
-    /** Init - failable.
-     * parameter baseCurrency: code of the base currency
+    /**
+     Init - failable.
+     
+     - parameters:
+        - baseCurrency: code of the base currency
+        - currencyServiceProvider: opt `CurrencyServiceProviderProtocol` 0 used for tests
      */
     init?(baseCurrency: CurrencyCode, currencyServiceProvider: CurrencyServiceProviderProtocol? = nil)
     {
@@ -85,16 +89,40 @@ extension CurrencyManager
         configurePolling(withRequestFactory: requestFactory)
     }
     
-    /** Function that configure the manager's `pollTask` then start the polling timer
-     * parameter requestFactory: factory that produces the request for the poll task
+    /**
+     Function that configure the manager's `pollTask` then start the polling timer
+     
+     - parameters:
+        - requestFactory: factory that produces the request for the poll task
      */
     private func configurePolling(withRequestFactory requestFactory: RequestFactory<CurrencyRates>)
     {
         self.pollTask = PollAsyncTask(requestFactory: requestFactory,
                                       completion: { [unowned self] in
+                                        /** Insert current base currency rate info at the beginning of the currencyRates array */
+                                        if let currentCurrencyRate = self.getCurrentCurrencyRate()
+                                        {
+                                            self.currencyRates = [currentCurrencyRate] + $0.augmented(with: self.currencyInfoDict)
+                                        }
                                         self.currencyRates = $0.augmented(with: self.currencyInfoDict)
                                       },
                                       interval: 1)
         self.pollTask?.start()
+    }
+}
+
+extension CurrencyManager
+{
+    /**
+     Returns the AugmentedCurrencyRateBO  for the current base currency if it
+     can find it in `currencyInfoDict`.
+     
+     - returns: Currency rate information for current base currency
+     */
+    func getCurrentCurrencyRate() -> AugmentedCurrencyRateBO?
+    {
+        return AugmentedCurrencyRateBO(currencyCode: baseCurrency,
+                                       conversionRate: 1,
+                                       currencyInfoList: currencyInfoDict)
     }
 }

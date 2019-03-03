@@ -12,15 +12,18 @@ import Promises
 protocol CurrencyServiceProviderProtocol
 {
     /**
-     * Currency service endpoint to get the currency rates for a given base currency
-     * - parameters baseCurrrency: base currency which rates are requested
-     * - returns: currency rates (relative to the base currency) as `CurrencyRates`
+     Currency service endpoint to get the currency rates for a given base currency
+     
+     - parameters:
+        - baseCurrrency: base currency which rates are requested
+     - returns: currency rates (relative to the base currency) as `CurrencyRates`
      */
     func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
     
     /**
-     * Mocked Currency service endpoint to get the currencies information
-     * - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
+     Mocked Currency service endpoint to get the currencies information
+     
+     - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
      */
     func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
 }
@@ -28,10 +31,14 @@ protocol CurrencyServiceProviderProtocol
 /** Class used as namespace to contain all the endpoints related to currency requests */
 class CurrencyServiceProvider: CurrencyServiceProviderProtocol
 {
+    let queue = DispatchQueue(label: "currency_manager_queue", qos: .background)
+    
     /**
-     * Currency service endpoint to get the currency rates for a given base currency
-     * - parameters baseCurrrency: base currency which rates are requested
-     * - returns: currency rates (relative to the base currency) as `CurrencyRates`
+     Currency service endpoint to get the currency rates for a given base currency
+     
+     - parameters:
+        - baseCurrrency: base currency which rates are requested
+        - returns: currency rates (relative to the base currency) as `CurrencyRates`
      */
     func getCurrencyRates(baseCurrency: CurrencyCode) -> Promise<CurrencyRates>
     {
@@ -47,7 +54,7 @@ class CurrencyServiceProvider: CurrencyServiceProviderProtocol
             Alamofire
                 .request(request)
                 .validate()
-                .responseJSON { response in
+                .responseJSON(queue: self.queue) { response in
                     switch response.result
                     {
                     case .success:
@@ -77,8 +84,8 @@ class CurrencyServiceProvider: CurrencyServiceProviderProtocol
     }
     
     /**
-     * Mocked Currency service endpoint to get the currencies information
-     * - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
+     Mocked Currency service endpoint to get the currencies information
+     - returns: currency list information as Dictionary<CurrencyCode, CurrencyInfo> so that find access is cheap
      */
     func getCurrencyListInfo() throws -> Dictionary<CurrencyCode, CurrencyInfo>
     {

@@ -32,7 +32,6 @@ class PollAsyncTaskTests: XCTestCase
         testPoll = PollAsyncTask(
             requestFactory: testRequestFactory,
             completion: { response in
-                print(count)
                 XCTAssert(response == true)
                 guard count < 3 else
                 {

@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
+        displayInitialViewController()
         return true
     }
 
@@ -29,3 +30,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func applicationWillTerminate(_ application: UIApplication) {}
 }
 
+extension AppDelegate
+{
+    private func displayInitialViewController()
+    {
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: AppConstants.Storyboards.Main.rawValue,
+                                                         bundle: nil)
+        let currencyConverterViewController = mainStoryboard.instantiateViewController(withIdentifier: CurrencyConverterViewController.identifier) as! CurrencyConverterViewController
+        let currencyConverterPresenter = CurrencyConverterPresenter(view: currencyConverterViewController)
+        currencyConverterViewController.presenter = currencyConverterPresenter
+        
+        let navViewController = UINavigationController.init(rootViewController: currencyConverterViewController)
+        navViewController.navigationBar.barStyle = .blackTranslucent
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navViewController
+        window?.makeKeyAndVisible()
+    }
+}

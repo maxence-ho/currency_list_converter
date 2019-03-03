@@ -8,9 +8,12 @@
 
 extension CurrencyRates
 {
-    /** Fonction that augments a `CurrencyRates` instance with information from a list of `CurrencyInfo`
-     * parameter currencyInfoList: list of CurrencyInfo used to augmend `CurrencyRates` information
-     * returns: augmented currency rates as [AugmentedCurrencyRateBO]
+    /**
+     Fonction that augments a `CurrencyRates` instance with information from a list of `CurrencyInfo`
+     
+     - parameters:
+        - currencyInfoList: list of CurrencyInfo used to augmend `CurrencyRates` information
+     - returns: augmented currency rates as [AugmentedCurrencyRateBO]
      */
     func augmented(with currencyInfoList: Dictionary<CurrencyCode, CurrencyInfo>) -> [AugmentedCurrencyRateBO]
     {

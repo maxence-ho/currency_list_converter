@@ -131,6 +131,7 @@ extension CurrencyRateCell
     private func configureAsDisplayCell()
     {
         currencyAmountTextField.isUserInteractionEnabled = false
+        currencyAmountTextField.resignFirstResponder()
         contentView.backgroundColor = .clear
     }
     

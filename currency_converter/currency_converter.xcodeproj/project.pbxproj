@@ -39,6 +39,8 @@
 		0195177B222B5A3E004C4C7A /* UITableViewCell+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0195177A222B5A3E004C4C7A /* UITableViewCell+extensions.swift */; };
 		0195177F222C1D6E004C4C7A /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0195177E222C1D6E004C4C7A /* Array+extensions.swift */; };
 		01951781222C1D89004C4C7A /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01951780222C1D89004C4C7A /* Weak.swift */; };
+		01951785222CA6DF004C4C7A /* CurrencyConverterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01951784222CA6DF004C4C7A /* CurrencyConverterPresenter.swift */; };
+		01951787222CA6EF004C4C7A /* CurrencyConvertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01951786222CA6EF004C4C7A /* CurrencyConvertViewController.swift */; };
 		01AC1D9C2223382600D60BA1 /* CurrencyServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CCD26A2223148500D08C4E /* CurrencyServiceProvider.swift */; };
 		01AC1DBC222343C300D60BA1 /* PollAsyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AC1DBB222343C300D60BA1 /* PollAsyncTask.swift */; };
 		01AC1DBE2223525400D60BA1 /* RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AC1DBD2223525400D60BA1 /* RequestFactory.swift */; };
@@ -112,6 +114,8 @@
 		0195177A222B5A3E004C4C7A /* UITableViewCell+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+extensions.swift"; sourceTree = "<group>"; };
 		0195177E222C1D6E004C4C7A /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		01951780222C1D89004C4C7A /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
+		01951784222CA6DF004C4C7A /* CurrencyConverterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterPresenter.swift; sourceTree = "<group>"; };
+		01951786222CA6EF004C4C7A /* CurrencyConvertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConvertViewController.swift; sourceTree = "<group>"; };
 		01AC1DBB222343C300D60BA1 /* PollAsyncTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollAsyncTask.swift; sourceTree = "<group>"; };
 		01AC1DBD2223525400D60BA1 /* RequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFactory.swift; sourceTree = "<group>"; };
 		01AC1DBF22235BD000D60BA1 /* CurrencyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRouter.swift; sourceTree = "<group>"; };
@@ -289,6 +293,23 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		01951782222CA6B7004C4C7A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				01951783222CA6C3004C4C7A /* CurrencyConverter */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		01951783222CA6C3004C4C7A /* CurrencyConverter */ = {
+			isa = PBXGroup;
+			children = (
+				01951784222CA6DF004C4C7A /* CurrencyConverterPresenter.swift */,
+				01951786222CA6EF004C4C7A /* CurrencyConvertViewController.swift */,
+			);
+			path = CurrencyConverter;
+			sourceTree = "<group>";
+		};
 		01AC1DC82224B03600D60BA1 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +366,7 @@
 		01CCD23922207E2F00D08C4E /* currency_converterTests */ = {
 			isa = PBXGroup;
 			children = (
+				01951782222CA6B7004C4C7A /* UI */,
 				01951730222A0953004C4C7A /* BusinessManagers */,
 				01CCD27622231C0200D08C4E /* Services */,
 				01CCD23C22207E2F00D08C4E /* Info.plist */,
@@ -614,6 +636,8 @@
 			files = (
 				019517252229F58D004C4C7A /* CurrencyInfo.swift in Sources */,
 				0195173E222A1832004C4C7A /* CurrencyManager.swift in Sources */,
+				01951787222CA6EF004C4C7A /* CurrencyConvertViewController.swift in Sources */,
+				01951785222CA6DF004C4C7A /* CurrencyConverterPresenter.swift in Sources */,
 				01AC1DCF2224BED800D60BA1 /* CurrencyRates.swift in Sources */,
 				01AC1DC022235BD000D60BA1 /* CurrencyRouter.swift in Sources */,
 				01951735222A09AD004C4C7A /* CurrencyRates+augmented.swift in Sources */,

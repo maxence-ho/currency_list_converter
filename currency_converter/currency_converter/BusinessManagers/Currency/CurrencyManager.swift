@@ -45,16 +45,6 @@ class CurrencyManager
             self.configurePolling(withRequestFactory: requestFactory)
         }
     }
-    
-    /** Up to date currency rates based on the base currency */
-    var currencyRates: [AugmentedCurrencyRateBO] = [] {
-        /** Upon changing the currencyRates, we notify the delegate that this
-         * value has changed and pass the new value
-         */
-        didSet {
-            delegate?.currencyRatesDidChange(newCurrencyRates: self.currencyRates)
-        }
-    }
 
     /**
      Init - failable.
@@ -102,9 +92,9 @@ extension CurrencyManager
                                         /** Insert current base currency rate info at the beginning of the currencyRates array */
                                         if let currentCurrencyRate = self.getCurrentCurrencyRate()
                                         {
-                                            self.currencyRates = [currentCurrencyRate] + $0.augmented(with: self.currencyInfoDict)
+                                            self.delegate?.currencyRatesDidChange(newCurrencyRates:[currentCurrencyRate] + $0.augmented(with: self.currencyInfoDict))
                                         }
-                                        self.currencyRates = $0.augmented(with: self.currencyInfoDict)
+                                        self.delegate?.currencyRatesDidChange(newCurrencyRates:$0.augmented(with: self.currencyInfoDict))
                                       },
                                       interval: 1)
         self.pollTask?.start()

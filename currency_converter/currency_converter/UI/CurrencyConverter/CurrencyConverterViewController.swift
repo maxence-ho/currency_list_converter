@@ -61,7 +61,11 @@ extension CurrencyConverterViewController: UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyRateCell.identifier,
                                                  for: indexPath) as! CurrencyRateCell
         /** Configure the cell */
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self, weak cell] in
+            guard
+                let self = self,
+                let cell = cell
+            else { return }
             if
                 let currencyRate = self.presenter?.getCurrencyRate(forRow: indexPath.row),
                 let presenter = self.presenter as? CurrencyConverterPresenter
@@ -72,7 +76,7 @@ extension CurrencyConverterViewController: UITableViewDelegate, UITableViewDataS
                 cell.updateCurrentCurrency(newBaseCurrency: presenter.getCurrentBaseCurrency())
             }
         }
-    
+
         return cell
     }
     
@@ -83,15 +87,15 @@ extension CurrencyConverterViewController: UITableViewDelegate, UITableViewDataS
         /** Update data source - should be done first -> reset all amounts to 0
          *  (makes a smoothier transition)
          */
-        self.presenter?.move(startIndex: indexPath.row, destinationIndex: 0)
+        presenter?.move(startIndex: indexPath.row, destinationIndex: 0)
         
         /** Move selected cell to top */
-        self.tableView.beginUpdates()
-        self.tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
-        self.tableView.endUpdates()
+        tableView.beginUpdates()
+        tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 0))
+        tableView.endUpdates()
         
         /** Scroll to top */
-        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -138,7 +142,7 @@ extension CurrencyConverterViewController
             presenter?.updateAmountToConvert(0)
             return
         }
-        
+
         if let amount = NumberFormatter().number(from: text)?.doubleValue
         {
             presenter?.updateAmountToConvert(amount)

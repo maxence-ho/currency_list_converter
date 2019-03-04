@@ -123,41 +123,4 @@ class CurrencyManagerTests: XCTestCase
         wait(for: [expectation_2], timeout: 2.0)
         
     }
-    
-    /**
-     * - When : changing `CurrencyManager`'s `currencyRates` property
-     * - Expects : the delegate is notified with the new value of `currencyRates`
-     */
-    func test_currencyRates_didChange()
-    {
-        let currencyManager = CurrencyManager(baseCurrency: "EUR")
-        
-        class TestListener: CurrencyManagerListener
-        {
-            var didReceiveNotification: (Bool, arg: [AugmentedCurrencyRateBO]?) = (false, arg: nil)
-            func currencyRatesDidChange(newCurrencyRates: [AugmentedCurrencyRateBO])
-            {
-                self.didReceiveNotification = (true, arg: newCurrencyRates)
-            }
-        }
-        
-        let testListener = TestListener()
-        currencyManager?.delegate = testListener
-        
-        let test_augmentedCurrencyInfoBO = AugmentedCurrencyInfoBO(
-            currencyCode: "EUR",
-            currencyFullname: "test_currencyFullname",
-            symbol: "test_symbol",
-            flagImage: UIImage()
-        )
-        let test_augmentedCurrencyRateBO = AugmentedCurrencyRateBO(
-            conversionRate: 1.0,
-            currencyInfo: test_augmentedCurrencyInfoBO
-        )
-        currencyManager?.currencyRates = [test_augmentedCurrencyRateBO]
-        
-        XCTAssert(testListener.didReceiveNotification.0 == true)
-        XCTAssert(testListener.didReceiveNotification.arg?.count == 1)
-        XCTAssert(testListener.didReceiveNotification.arg?.first == test_augmentedCurrencyRateBO)
-    }
 }

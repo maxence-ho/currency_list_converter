@@ -78,7 +78,7 @@ extension CurrencyRateCell
      - parameters:
         - newBaseCurrency: CurrencyCode of the new base currency
      */
-    func updateCurrentCurrency(newBaseCurrency: CurrencyCode)
+    @objc func updateCurrentCurrency(newBaseCurrency: CurrencyCode)
     {
         guard newBaseCurrency == currencyCode else
         {
@@ -98,8 +98,8 @@ extension CurrencyRateCell
         - amountToConvert: value of the amount of base currency
      */
     func updateRateAndAmount(from newRates: [AugmentedCurrencyRateBO],
-                             currentBaseCurrency: CurrencyCode,
-                             amountToConvert: Double)
+                                   currentBaseCurrency: CurrencyCode,
+                                   amountToConvert: Double)
     {
         /** Check that cell does not correspond to base currency and that we can
          *  find it in `newRates`

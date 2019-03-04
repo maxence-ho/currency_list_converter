@@ -23,7 +23,7 @@ class CurrencyConverterPresenter
     
     var delegates: [Weak<CurrencyRateCell>] = []
     
-    init(view: CurrencyConverterViewControllerProtocol)
+    init(view: CurrencyConverterViewControllerProtocol?)
     {
         self.view = view
     }
